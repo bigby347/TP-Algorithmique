@@ -1,14 +1,13 @@
 import java.io.*;
 import java.util.*;
-import java.util.Vector;
 
-public class Reader {
+public class GraphConstructor {
 
     private BufferedReader input;
     private String fileName;
     private File file;
 
-    public Reader(String fileName) {
+    public GraphConstructor(String fileName) {
         this.fileName = fileName;
         this.file = new File(fileName);
     }
