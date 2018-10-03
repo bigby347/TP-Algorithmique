@@ -82,9 +82,9 @@ public class Graph<Label> {
         int a=0;
         int dateFin=0;
         Stack sEnCours = new Stack();
-        int[][] resultat = new int[][];
+        int[][] resultat = new int[order()*2][2];
         sEnCours.push(s);
-        while(resultat.length<(this.order()*2-1)){
+        while(c<(order()*2-1)){
             while(verif){
                 s=incidency.get(s).get(a).destination;
                 verif=true;
@@ -106,7 +106,9 @@ public class Graph<Label> {
                         sEnCours.pop();
                         resultat[c][1]=dateFin;
                         dateFin+=1;
+                        c+=1;
                     }
+                    verif=true;
                 }
             }
             sEnCours.push(s);
