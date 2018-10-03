@@ -5,7 +5,7 @@ public class Stack {
     public Stack() {
         vector = new Vector();
     }
-
+    //ajoute un sommet
     public void push(int value) {
         vector.add(value);
     }
