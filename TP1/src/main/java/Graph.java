@@ -75,9 +75,46 @@ public class Graph<Label> {
 
     static final int BLANC=0,GRIS=1,NOIR=2;
 
-    public int[] parcoursProfondeur(){
+    public int[][] parcoursProfondeur(){
+        int c=0;
+        int s=0;
+        boolean verif=false;
+        int a=0;
+        int dateFin=0;
+        Stack sEnCours = new Stack();
+        int[][] resultat = new int[][];
+        sEnCours.push(s);
+        while(resultat.length<(this.order()*2-1)){
+            while(verif){
+                s=incidency.get(s).get(a).destination;
+                verif=true;
+                for(int i=0;i<sEnCours.size();i++){
+                    if(s==sEnCours.getValue(i)){
+                        verif=false;
+                    }
+                }
+                for(int i=0;i<resultat.length;i++){
+                    if(s==resultat[i][0]){
+                        verif=false;
+                    }
+                }
+                if(verif==false){
+                    if(a<incidency.get(sEnCours.peek()).size()-1){
+                        a+=1;
+                    }else{
+                        resultat[c][0]=sEnCours.peek();
+                        sEnCours.pop();
+                        resultat[c][1]=dateFin;
+                        dateFin+=1;
+                    }
+                }
+            }
+            sEnCours.push(s);
+            dateFin+=1;
+        }
 
-        int date;
+
+        /*int date;
 
         int[] result = new int[order()];
         int[] couleur = new int[order()];
@@ -86,8 +123,8 @@ public class Graph<Label> {
         }
 
 
-        Stack sFinis = new Stack();
+        Stack sFinis = new Stack();*/
 
-        return result;
+        return resultat;
     }
 }

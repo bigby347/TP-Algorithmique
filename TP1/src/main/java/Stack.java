@@ -29,4 +29,8 @@ public class Stack {
     public boolean isEmpty(){
         return vector.isEmpty();
     }
+
+    public int getValue(int value){
+        return vector.get(value);
+    }
 }
