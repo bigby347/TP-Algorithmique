@@ -20,6 +20,7 @@ public class TestReader {
         System.out.println("Le graphe tranposé G : ");
         System.out.println(transpose.toString());
         System.out.println("----------------------------");
+        graph.parcoursProfondeur();
 
     }
 }

@@ -73,10 +73,18 @@ public class Graph<Label> {
         }
     }
 
+    static final int BLANC=0,GRIS=1,NOIR=2;
 
-    public int[] ParcoursProfondeur(){
-        for (:incidency) {
-            
+    public int[] parcoursProfondeur(){
+
+        int date;
+
+        int[] result = new int[order()];
+        int[] couleur = new int[order()];
+        for (int i=0;i<incidency.size();i++){
+            couleur[i] = BLANC;
         }
+
+        return result;
     }
 }
