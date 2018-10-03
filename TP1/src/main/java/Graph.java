@@ -74,5 +74,9 @@ public class Graph<Label> {
     }
 
 
-
+    public int[] ParcoursProfondeur(){
+        for (:incidency) {
+            
+        }
+    }
 }

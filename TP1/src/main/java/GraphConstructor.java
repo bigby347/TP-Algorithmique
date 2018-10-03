@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.*;
 import java.util.*;
 
@@ -21,11 +22,13 @@ public class GraphConstructor {
         return varCount;
     }
 
-    public Graph createGraph() throws IOException {
+    public ArrayList<Graph> createGraph() throws IOException {
         String line;
-        Graph graph = new Graph(2*readVarCount());
+        Graph graph = new Graph(2 * readVarCount());
+        Graph transpose = new Graph(2 * readVarCount());
+        ArrayList<Graph> graphs = new ArrayList<Graph>(2);
         int[] array;
-        int x,y;
+        int x, y;
         input = new BufferedReader(new FileReader(file));
         array = createTab(readVarCount());
         while ((line = input.readLine()) != null) {
@@ -33,23 +36,29 @@ public class GraphConstructor {
             if (st.countTokens() > 1) {
                 x = Integer.parseInt(st.nextToken());
                 y = Integer.parseInt(st.nextToken());
-                graph.addArc(getIndex(-x,array),getIndex(y,array),1);
-                graph.addArc(getIndex(-y,array),getIndex(x,array),1);
+                /*Créer le Graphe*/
+                graph.addArc(getIndex(-x, array), getIndex(y, array), 1);
+                graph.addArc(getIndex(-y, array), getIndex(x, array), 1);
+
+                /*Créer le Graphe transposé*/
+                transpose.addArc(getIndex(y, array), getIndex(-x, array), 1);
+                transpose.addArc(getIndex(x, array), getIndex(-y, array), 1);
             }
         }
-        return graph;
+        graphs.add(graph);
+        graphs.add(transpose);
+        return graphs;
     }
 
-    public int getIndex(int litteral,int[] tab) {
-        int i=0;
+    public int getIndex(int litteral, int[] tab) {
+        int i = 0;
         int absLit = Math.abs(litteral);
-        while (tab[i] != absLit){
+        while (tab[i] != absLit) {
             i++;
         }
-        if( litteral < 0){
+        if (litteral < 0) {
             return i + tab.length;
-        }
-        else {
+        } else {
             return i;
         }
     }
@@ -64,4 +73,5 @@ public class GraphConstructor {
 
         return tab;
     }
+
 }
