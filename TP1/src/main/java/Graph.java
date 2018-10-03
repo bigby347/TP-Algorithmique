@@ -85,6 +85,9 @@ public class Graph<Label> {
             couleur[i] = BLANC;
         }
 
+
+        Stack sFinis = new Stack();
+
         return result;
     }
 }
