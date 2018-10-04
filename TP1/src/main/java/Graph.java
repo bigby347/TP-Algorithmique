@@ -76,6 +76,7 @@ public class Graph<Label> {
     static final int BLANC=0,GRIS=1,NOIR=2;
 
     public int[][] parcoursProfondeur(){
+        System.out.println("test");
         int c=0;
         int s=0;
         boolean verif=false;
@@ -85,7 +86,8 @@ public class Graph<Label> {
         int[][] resultat = new int[order()*2][2];
         sEnCours.push(s);
         while(c<(order()*2-1)){
-            while(verif){
+            while(verif==false){
+                System.out.println(s);
                 s=incidency.get(s).get(a).destination;
                 verif=true;
                 for(int i=0;i<sEnCours.size();i++){
@@ -109,7 +111,7 @@ public class Graph<Label> {
                         c+=1;
                         int j=0;
                         int i=0;
-                        while(sEnCours.size()==0) {
+                        while(sEnCours.size()==0 || i!=incidency.size()*2-1) {
                             if(j!=resultat[i][0]){
                                 sEnCours.push(j);
                             }else if(j==resultat[i][0] && i<(resultat.length-1)){
@@ -123,22 +125,19 @@ public class Graph<Label> {
                     verif=true;
                 }
             }
+            verif=false;
             sEnCours.push(s);
             dateFin+=1;
         }
-
-
-        /*int date;
-
-        int[] result = new int[order()];
-        int[] couleur = new int[order()];
-        for (int i=0;i<incidency.size();i++){
-            couleur[i] = BLANC;
-        }
-
-
-        Stack sFinis = new Stack();*/
-
         return resultat;
+    }
+
+    public void affTab(int tab[][]){
+        for (int i=0;i<tab.length;i++){
+            for (int j=0;j<2;j++){
+                System.out.print(tab[i][j]);
+            }
+            System.out.println();
+        }
     }
 }
