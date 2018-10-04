@@ -5,7 +5,11 @@ public class Stack {
     public Stack() {
         vector = new Vector();
     }
-    //ajoute un sommet
+
+    /**
+     * ajoute un sommet de valeur value
+     * @param value
+     */
     public void push(int value) {
         vector.add(value);
     }

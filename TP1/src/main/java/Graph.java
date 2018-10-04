@@ -107,6 +107,18 @@ public class Graph<Label> {
                         resultat[c][1]=dateFin;
                         dateFin+=1;
                         c+=1;
+                        int j=0;
+                        int i=0;
+                        while(sEnCours.size()==0) {
+                            if(j!=resultat[i][0]){
+                                sEnCours.push(j);
+                            }else if(j==resultat[i][0] && i<(resultat.length-1)){
+                                i+=1;
+                            }else {
+                                i=0;
+                                j=0;
+                            }
+                        }
                     }
                     verif=true;
                 }
