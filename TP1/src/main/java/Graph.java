@@ -145,19 +145,29 @@ public class Graph<Label> {
     }
 
 
-    public LinkedList<Integer> dfs(int u, boolean[] marked, int date, LinkedList<Integer> order) {
-        int[] d = new int[cardinal];
-        int[] f = new int[cardinal];
-        date += 1;
-        d[u] = date;
+    public LinkedList<Integer> dfs(int u, boolean[] marked, LinkedList<Integer> order) {
         marked[u] = true;
         for (Edge e : incidency.get(u)) {
             if (!marked[e.destination]) {
-                dfs(e.destination, marked, date,order);
+                dfs(e.destination, marked,order);
             }
         }
-        f[u] = date + 1;
         order.add(u);
+
+        return order;
+    }
+
+    public LinkedList<Integer> dfsOnReverseGraph(int u, boolean[] marked, LinkedList<Integer> order,int C[]) {
+
+        marked[u] = true;
+        for (Edge e : incidency.get(u)) {
+            C[e.destination]=u;
+            if (!marked[e.destination]) {
+                dfsOnReverseGraph(e.destination,marked,order,C);
+            }
+        }
+        order.add(u);
+
 
         return order;
     }
