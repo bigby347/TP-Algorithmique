@@ -1,10 +1,8 @@
-import java.io.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
-public class TestReader {
-
+public class Main {
     public static void main(String[] argv) throws IOException {
         ArrayList<Graph> graphs;
         Graph graph;
@@ -28,6 +26,15 @@ public class TestReader {
 
         System.out.println("Les composentes fortement connexes : ");
         System.out.println(components);
+
+        System.out.println("Satisfiabilité du problème :");
+
+        if(scc.isSatisfiable(components)){
+            System.out.println("Le probleme est satisfiable");
+        }
+        else {
+            System.out.println("Le probleme n'est pas satisfiable");
+        }
 
     }
 }

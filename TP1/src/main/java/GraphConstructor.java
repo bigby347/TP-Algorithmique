@@ -18,7 +18,6 @@ public class GraphConstructor {
         input = new BufferedReader(new FileReader(file));
 
         varCount = Integer.valueOf(input.readLine());
-
         return varCount;
     }
 
