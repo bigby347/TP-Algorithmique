@@ -33,20 +33,24 @@ public class SCCKosaraju {
         Collections.reverse(order);
         System.out.println(order);
         Arrays.fill(marked, false);
-        LinkedList<Integer> component = new LinkedList<Integer>();
 
+
+
+
+        ArrayList<LinkedList<Integer>> component = new ArrayList<LinkedList<Integer>>();
+        for (int i = 0; i < graph.order(); i++) {
+            component.add(i, new LinkedList<Integer>());
+        }
+
+
+        int k = 0;
         for(int u : order){
             if(!marked[u]){
-                component = reverseGraph.dfsOnReverseGraph(u,marked,component,C);
-                compo.add(component);
+                reverseGraph.dfsOnReverseGraph(k,u,marked,component,C);
             }
+            k+=1;
         }
 
-        for (int j=0;j<n;j++){
-            System.out.print(j);
-            System.out.print(C[j]);
-            System.out.print("\n");
-        }
-        return compo;
+        return component;
     }
 }

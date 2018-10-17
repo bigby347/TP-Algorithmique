@@ -12,7 +12,7 @@ public class TestReader {
         ArrayList<LinkedList<Integer>> components;
 
 
-        GraphConstructor graphConstructor = new GraphConstructor("src/formula1.txt");
+        GraphConstructor graphConstructor = new GraphConstructor("src/sat10.txt");
         graphs = graphConstructor.createGraph();
         graph = graphs.get(0);
         transpose = graphs.get(1);
