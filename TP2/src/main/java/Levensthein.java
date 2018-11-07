@@ -1,8 +1,14 @@
-public class Dictionary {
+public class Levensthein {
 
-    public Dictionary(){}
+    String word1;
+    String word2;
 
-    public static int levenshteinDistance(String word1, String word2) {
+    public Levensthein(String word1,String word2){
+        this.word1 = word1;
+        this.word2 = word2;
+    }
+
+    public int levenshteinDistance() {
 
         int distance[][] = new int[word1.length() + 1][word2.length() + 1];
         // i et j itèrent sur word1 et word2
@@ -10,15 +16,15 @@ public class Dictionary {
         int edit; //coût de substitution
         //initialisation de la distance
 
-        for (i=0 ; i<word1.length();i++){
+        for (i=0 ; i<=word1.length();i++){
             distance[i][0] = i;
         }
-        for (j=0 ; j<word2.length();j++){
+        for (j=0 ; j<=word2.length();j++){
             distance[0][j] = j;
         }
 
-        for(i=1;i<word1.length();i++){
-            for (j=1;j<word2.length();j++){
+        for(i=1;i<=word1.length();i++){
+            for (j=1;j<=word2.length();j++){
 
                 int db = distance[i-1][j-1]; // diagonal box
                 int lb = distance[i][j-1]; // left box

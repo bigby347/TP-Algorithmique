@@ -8,8 +8,9 @@ public class Main {
 
     public static void main(String[] args) {
         List<String> dico = readFile("dico.txt");
+        Levensthein levensthein= new Levensthein("niche","chiens");
         //for (String word : dico) System.out.println(word);
-        int d = Dictionary.levenshteinDistance("niche","chiens");
+        int d = levensthein.levenshteinDistance();
         System.out.println(d);
     }
 
