@@ -1,7 +1,8 @@
 public class Dictionary {
 
+    public Dictionary(){}
 
-    public int levenshteinDistance(String word1, String word2) {
+    public static int levenshteinDistance(String word1, String word2) {
 
         int distance[][] = new int[word1.length() + 1][word2.length() + 1];
         // i et j itèrent sur word1 et word2
@@ -12,7 +13,7 @@ public class Dictionary {
         for (i=0 ; i<word1.length();i++){
             distance[i][0] = i;
         }
-        for (j=0 ; j<word1.length();j++){
+        for (j=0 ; j<word2.length();j++){
             distance[0][j] = j;
         }
 
@@ -28,11 +29,21 @@ public class Dictionary {
                 }
                 else {
                     edit = 1;
-                    distance[i][j] = Math.min(distance[i-1][j-1])
                 }
+
+                distance[i][j] = Math.min(db + edit,Math.min(lb+1,tb+1));
             }
         }
 
-        return 0;
+        for(int k=0; k<distance.length; k++)
+		{
+			for(int l=0; l<distance[0].length; l++)
+			{
+				System.out.print(distance[k][l]+"  ");
+			}
+			System.out.println();
+		}
+
+        return distance[distance.length-1][distance[0].length -1];
     }
 }
