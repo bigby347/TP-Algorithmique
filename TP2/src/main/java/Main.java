@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
         long x = System.nanoTime();
-        String word = "logarytmique";
+        String word = "enticonstitucionele";
         List<String> dico = readFile("dico.txt");
         TrigramsDictionnary trigramsDictionnary = new TrigramsDictionnary();
         List<String> suggestionList = new ArrayList<>();
@@ -18,11 +18,11 @@ public class Main {
         trigramsDictionnary.trigramsDictionnary(dico);
         if(!dico.contains(word)){
             System.out.println("Mots avec le plus de trigrammes en commun :");
-            List<String> communWords = trigramsDictionnary.search(word,1000);
+            List<String> communWords = trigramsDictionnary.search(word,10000);
             printList(communWords);
             System.out.println("-----------------");
             System.out.println("Mots suggérés :");
-            suggestionList = levenshtein.bestWords(communWords,10);
+            suggestionList = levenshtein.bestWords(communWords,5);
             printList(suggestionList);
         }
         else{
