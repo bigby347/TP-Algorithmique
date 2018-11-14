@@ -80,9 +80,10 @@ public class TrigramsDictionnary {
         }
         //on trie la map par value dans un ordre décroissant
         Map<String,Integer> sortMap = MapTools.sortByValueDescending(triMap);
+        //MapTools.printMap(sortMap);
         // on choisi les n premier mots que l'on stock dans une list
 
-        for (Map.Entry<String,Integer> mapEntry : triMap.entrySet()){
+        for (Map.Entry<String,Integer> mapEntry : sortMap.entrySet()){
             if(returnList.size()<wordNumber) returnList.add(mapEntry.getKey());
             else break;
         }

@@ -10,25 +10,27 @@ public class Main {
 
     public static void main(String[] args) {
         long x = System.nanoTime();
-        String word = "enticonstitucionele";
+        //String faute = "waggon";
         List<String> dico = readFile("dico.txt");
+        List<String> fautes = readFile("fautes.txt");
         TrigramsDictionnary trigramsDictionnary = new TrigramsDictionnary();
         List<String> suggestionList = new ArrayList<>();
-        Levenshtein levenshtein = new Levenshtein(word);
         trigramsDictionnary.trigramsDictionnary(dico);
-        if(!dico.contains(word)){
-            System.out.println("Mots avec le plus de trigrammes en commun :");
-            List<String> communWords = trigramsDictionnary.search(word,10000);
-            printList(communWords);
-            System.out.println("-----------------");
-            System.out.println("Mots suggérés :");
-            suggestionList = levenshtein.bestWords(communWords,5);
-            printList(suggestionList);
+        for(String faute: fautes) {
+            Levenshtein levenshtein = new Levenshtein(faute);
+            System.out.println("\nLe mot à corriger est : "+faute);
+            if (!dico.contains(faute)) {
+                //System.out.println("Mots avec le plus de trigrammes en commun :");
+                List<String> communWords = trigramsDictionnary.search(faute, 100);
+                //printList(communWords);
+                //System.out.println("-----------------");
+                System.out.println("Mots suggérés :");
+                suggestionList = levenshtein.bestWords(communWords, 5);
+                printList(suggestionList);
+            } else {
+                System.out.println("Le mot est correct");
+            }
         }
-        else{
-            System.out.println("Le mot est correct");
-        }
-
         System.out.println("Temps d'exécution :"+ TimeUnit.NANOSECONDS.toMillis(System.nanoTime()-x));
     }
 

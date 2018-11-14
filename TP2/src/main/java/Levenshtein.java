@@ -63,7 +63,7 @@ public class Levenshtein {
         }
 
         Map<String,Integer> sortMap = MapTools.sortByValueAscending(bestWordsMap);
-        MapTools.printMap(sortMap);
+        //MapTools.printMap(sortMap);
         List<String> bestWords = new ArrayList<>();
         for (Map.Entry<String,Integer> mapEntry : sortMap.entrySet()){
             if(bestWords.size()<n) bestWords.add(mapEntry.getKey());
