@@ -25,7 +25,7 @@ public class RootedTree {
 		
 		public Node(int vertex) {
 			this.vertex = vertex;
-			this.sons = new ArrayList<>();
+			this.sons = new ArrayList<Node>();
 			this.height = 0;
 		}
 		

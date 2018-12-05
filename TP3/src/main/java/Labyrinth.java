@@ -93,7 +93,7 @@ public class Labyrinth extends JPanel {
 	public Labyrinth(Grid g, RootedTree tree) {
 		this.grid = g;
 		this.tree = tree;
-		edges = new ArrayList<>();
+		edges = new ArrayList<Edge>();
 		recomputeDefaultValues();
 		setPreferredSize(new Dimension(side * grid.width,side*grid.height));
 		img = new BufferedImage(

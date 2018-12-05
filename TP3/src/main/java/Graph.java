@@ -12,16 +12,27 @@ public class Graph implements Iterable<Edge>{
 	int order;
 	int edgeCardinality;
 	
-	ArrayList<LinkedList<Edge>> adjacency;
+	ArrayList<LinkedList<Edge>> adjacency; //graphe non orientés
 	ArrayList<LinkedList<Arc>> inAdjacency;
 	ArrayList<LinkedList<Arc>> outAdjacency;
 	
 	public boolean isVertex(int index) {
-	    // à remplir
+			for(LinkedList Edge : adjacency){
+				return (Edge.contains(index));
+			}
+
+			for(LinkedList ArcIn : inAdjacency) {
+				return (ArcIn.contains(index));
+			}
+
+			for(LinkedList ArcOut : outAdjacency){
+				return (ArcOut.contains(index));
+			}
+			return false;
 	}
 	
 	public <T> ArrayList<LinkedList<T>> makeList(int size) {
-		ArrayList<LinkedList<T>> res = new ArrayList<>(size);
+		ArrayList<LinkedList<T>> res = new ArrayList<LinkedList<T>>(size);
 		for(int i = 0; i <= size; i++) {
 			res.add(null);			
 		}
@@ -29,23 +40,62 @@ public class Graph implements Iterable<Edge>{
 	}
 	
 	public Graph(int upperBound) {
-	    // à remplir
+	    order = upperBound;
+	    adjacency = makeList(order);
+	    inAdjacency = makeList(order);
+	    outAdjacency = makeList(order);
 	}
 	
 	public void addVertex(int indexVertex) {
-	    // à remplir
+		adjacency.add(indexVertex, new LinkedList<Edge>());
+		inAdjacency.add(indexVertex, new LinkedList<Arc>());
+		outAdjacency.add(indexVertex, new LinkedList<Arc>());
+		order++;
 	}
 	
-	public void ensureVertex(int indexVertex) {
-	    // à remplir
+	public boolean ensureVertex(int indexVertex) {
+	    if(!isVertex(indexVertex)){
+	    	addVertex(indexVertex);
+	    	return true;
+		}
+	    return false;
 	}	
 	
 	public void addArc(Arc arc) {
-	    // à remplir
+		inAdjacency.get(inAdjacency.size()).add(arc);
+		outAdjacency.get(outAdjacency.size()).add(arc);
+		order++;
 	}
 	
 	public void addEdge(Edge e) {
-	    // à remplir
+		edgeCardinality++;
+		if(ensureVertex(e.source) && !hasEdge(e)){
+			adjacency.get(e.source).add(e);
+		}
+
+		Edge inversedEdge  = new Edge(e.dest,e.source,e.weight);
+		if(ensureVertex(inversedEdge.source) && !hasEdge(inversedEdge)){
+			adjacency.get(inversedEdge.source).add(inversedEdge);
+		}
+
+		addArc(new Arc(e,false));
+		addArc(new Arc(inversedEdge,true));
+	}
+	/*
+		Verifie si l'arête n'est pas déjà présente dans le graph
+	 */
+	public boolean hasEdge(Edge e){
+		for(Edge edge : adjacency.get(e.source))
+			if(edge.dest == e.dest){
+				return true;
+			}
+
+		return false;
+	}
+
+	public Arc outNeighbours(int vertex){
+		//TODO à remplir
+		return null;
 	}
 	
 }
