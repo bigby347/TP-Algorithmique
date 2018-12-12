@@ -1,101 +1,81 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 
-public class Graph implements Iterable<Edge>{
-    // classe de graphe non orientés permettant de manipuler
-    // en même temps des arcs (orientés)
-    // pour pouvoir stocker un arbre couvrant, en plus du graphe
-    
-	int order;
-	int edgeCardinality;
-	
-	ArrayList<LinkedList<Edge>> adjacency; //graphe non orientés
-	ArrayList<LinkedList<Arc>> inAdjacency;
-	ArrayList<LinkedList<Arc>> outAdjacency;
-	
+/*
+	CODE DE BAPTISTE BUSNOULT
+ */
+
+public class Graph implements Iterable<Edge> {
+	// classe de graphe non orientés permettant de manipuler
+	// en même temps des arcs (orientés)
+	// pour pouvoir stocker un arbre couvrant, en plus du graphe
+
+	public int order;
+	public int edgeCardinality;
+
+	ArrayList<LinkedList<Edge>> adjacency;
+	ArrayList<LinkedList<Arc>> inAdjacency; //Arcs qui arrivent vers le sommet
+	ArrayList<LinkedList<Arc>> outAdjacency;  //Arcs qui partent du sommet
+
+
 	public boolean isVertex(int index) {
-			for(LinkedList Edge : adjacency){
-				return (Edge.contains(index));
-			}
-
-			for(LinkedList ArcIn : inAdjacency) {
-				return (ArcIn.contains(index));
-			}
-
-			for(LinkedList ArcOut : outAdjacency){
-				return (ArcOut.contains(index));
-			}
-			return false;
+		return index < adjacency.size() && index>=0;
 	}
-	
-	public <T> ArrayList<LinkedList<T>> makeList(int size) {
-		ArrayList<LinkedList<T>> res = new ArrayList<LinkedList<T>>(size);
-		for(int i = 0; i <= size; i++) {
-			res.add(null);			
+
+	public void ensureVertex(int indexVertex) {
+		if (!isVertex(indexVertex)) {
+
+			addVertex(indexVertex);
 		}
-		return res;
+
 	}
-	
+
 	public Graph(int upperBound) {
-	    order = upperBound;
-	    adjacency = makeList(order);
-	    inAdjacency = makeList(order);
-	    outAdjacency = makeList(order);
+		order = upperBound;
+		adjacency = new ArrayList<LinkedList<Edge>>();
+		inAdjacency = new ArrayList<LinkedList<Arc>>();
+		outAdjacency = new ArrayList<LinkedList<Arc>>();
 	}
-	
-	public void addVertex(int indexVertex) {
-		adjacency.add(indexVertex, new LinkedList<Edge>());
-		inAdjacency.add(indexVertex, new LinkedList<Arc>());
-		outAdjacency.add(indexVertex, new LinkedList<Arc>());
-		order++;
-	}
-	
-	public boolean ensureVertex(int indexVertex) {
-	    if(!isVertex(indexVertex)){
-	    	addVertex(indexVertex);
-	    	return true;
-		}
-	    return false;
-	}	
-	
+
+
 	public void addArc(Arc arc) {
-		inAdjacency.get(inAdjacency.size()).add(arc);
-		outAdjacency.get(outAdjacency.size()).add(arc);
-		order++;
+		inAdjacency.get(arc.getDest()).add(arc);
+		outAdjacency.get(arc.getSource()).add(arc);
 	}
-	
+
+	public void addVertex(int indexVertex) {
+		adjacency.ensureCapacity(indexVertex);
+		order += indexVertex;
+		for (int i=adjacency.size(); i<=indexVertex;i++) {
+			adjacency.add(new LinkedList<Edge>());
+			inAdjacency.add(new LinkedList<Arc>());
+			outAdjacency.add(new LinkedList<Arc>());
+		}
+	}
+
 	public void addEdge(Edge e) {
-		edgeCardinality++;
-		if(ensureVertex(e.source) && !hasEdge(e)){
-			adjacency.get(e.source).add(e);
-		}
-
-		Edge inversedEdge  = new Edge(e.dest,e.source,e.weight);
-		if(ensureVertex(inversedEdge.source) && !hasEdge(inversedEdge)){
-			adjacency.get(inversedEdge.source).add(inversedEdge);
-		}
-
+		addVertex(e.dest);
+		adjacency.get(e.dest).add(e);
+		addVertex(e.source);
+		adjacency.get(e.source).add(e);
 		addArc(new Arc(e,false));
-		addArc(new Arc(inversedEdge,true));
-	}
-	/*
-		Verifie si l'arête n'est pas déjà présente dans le graph
-	 */
-	public boolean hasEdge(Edge e){
-		for(Edge edge : adjacency.get(e.source))
-			if(edge.dest == e.dest){
-				return true;
-			}
-
-		return false;
+		addArc(new Arc(e,true));
 	}
 
-	public Arc outNeighbours(int vertex){
-		//TODO à remplir
+	public List<Arc> outNeighbours(int vertex) {
+		return outAdjacency.get(vertex);
+	}
+
+	@Override
+	public Iterator<Edge> iterator() {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+
 }
