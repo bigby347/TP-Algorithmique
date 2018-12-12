@@ -3,56 +3,50 @@ import java.util.*;
 public class AldousBroder {
 
     Graph graph;
-    BitSet reached;
+    boolean[] reached;
     ArrayList<ArrayList<Arc>> tree;
     int currentVertex;
+    Random random= new Random();
 
     public AldousBroder(Graph graph) {
         this.graph = graph;
-        this.reached = new BitSet(graph.order);
-        Random rand = new Random();
-        this.currentVertex = rand.nextInt(graph.order);
+        this.reached = new boolean[graph.order];
+        this.currentVertex = random.nextInt(graph.order);
+        reached[currentVertex] = true;
         this.tree= new ArrayList<>();
-        for(int i = 0; i <= graph.order ; i++) {
-            tree.add(new ArrayList<Arc>());
-        }
     }
 
     public boolean allVertexesReached(){
-        for(int i =0 ; i<=reached.size();i++){
-            if(!reached.get(i)) return false;
+        for(Boolean bool :reached){
+            if(!bool) return bool;
         }
         return true;
     }
-
-    public void parcours(){
-
-        reached.set(currentVertex);
-        Random random= new Random();
-        int randomNeighbours = random.nextInt(graph.order);
-        List<Arc> neighbours = graph.outNeighbours(currentVertex);
-        while(!allVertexesReached()){
-            currentVertex = neighbours.get(randomNeighbours).getDest();
-            if(!reached.get(currentVertex)){
-                tree.get(neighbours.get(randomNeighbours).getSource()).add(neighbours.get(randomNeighbours));
-                reached.set(currentVertex);
-            }
+    public void makeList(){
+        tree = new ArrayList<>();
+        for(int i = 0; i < graph.order ; i++) {
+            this.tree.add(new ArrayList<Arc>());
         }
-
     }
-
     public ArrayList<Arc> generateTree() {
+        makeList();
 
-        Random random = new Random();
-        int randomVertex = random.nextInt(graph.order);
-        parcours();
+
+        while(!allVertexesReached()){
+            List<Arc> neighbours = graph.outNeighbours(currentVertex);
+            int randomNeighbours = random.nextInt(neighbours.size());
+            currentVertex = neighbours.get(randomNeighbours).getDest();
+            if(!reached[currentVertex]){
+                tree.get(neighbours.get(randomNeighbours).getSource()).add(neighbours.get(randomNeighbours));
+            }
+            reached[currentVertex]=true;
+        }
 
         ArrayList<Arc> result = new ArrayList<>();
         for(ArrayList<Arc> arcs: tree) {
             if(!arcs.isEmpty())
-                result.add(arcs.get(0));
+                result.addAll(arcs);
         }
         return result;
-
     }
 }

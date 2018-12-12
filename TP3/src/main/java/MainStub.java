@@ -17,9 +17,12 @@ public class MainStub {
 
         // TODO : modifier l'algorithme utiliser ici.
 
-        // Non-random BFS
+        //Test AldousBroder
         AldousBroder algo = new AldousBroder(graph);
         ArrayList<Arc> randomArcTree = algo.generateTree();
+
+        //TestBfs
+        //ArrayList<Arc> randomArcTree = BreadthFirstSearch.generateTree(graph,0);
         randomTree = new ArrayList<Edge>();
         for (Arc a : randomArcTree) randomTree.add(a.support);
 
