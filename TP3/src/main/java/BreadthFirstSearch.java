@@ -3,7 +3,7 @@ import java.util.*;
 public class BreadthFirstSearch
 {
     Graph graph;
-    LinkedList<Arc> frontier;
+    Queue<Arc> frontier;
     ArrayList<Arc> tree;
     BitSet reached;
 
@@ -44,11 +44,5 @@ public class BreadthFirstSearch
         algo.bfs(root);
         return algo.tree;
     }
-
-//	public static ArrayList<Arc> generateTree(Graph g, int a)
-//	{
-//		ArrayList<Arc> list = new ArrayList<>();
-//		return list;
-//	}
 
 }

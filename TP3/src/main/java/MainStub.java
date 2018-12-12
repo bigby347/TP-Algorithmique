@@ -33,6 +33,7 @@ public class MainStub {
         Grid grid = null;
         grid = new Grid(1920 / 11, 1080 / 11);
         Graph graph = grid.graph;
+        System.out.println(graph.order);
 
 //		Graph graph = new Complete(400).graph;
 
@@ -112,11 +113,11 @@ public class MainStub {
         window.setVisible(true);
 
         // Pour générer un fichier image.
-        /*try {
+        try {
             laby.saveImage("resources/random.png");
         } catch (IOException e1) {
             e1.printStackTrace();
-        }*/
+        }
 
     }
 

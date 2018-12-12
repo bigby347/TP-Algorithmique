@@ -5,48 +5,38 @@ public class AldousBroder {
     Graph graph;
     BitSet reached;
     ArrayList<ArrayList<Arc>> tree;
+    int currentVertex;
 
     public AldousBroder(Graph graph) {
         this.graph = graph;
         this.reached = new BitSet(graph.order);
-        this.tree = makeList(graph.order);
+        Random rand = new Random();
+        this.currentVertex = rand.nextInt(graph.order);
+        this.tree= new ArrayList<>();
+        for(int i = 0; i <= graph.order ; i++) {
+            tree.add(new ArrayList<Arc>());
+        }
     }
 
     public boolean allVertexesReached(){
-        for(int i =0 ; i<reached.size();i++){
+        for(int i =0 ; i<=reached.size();i++){
             if(!reached.get(i)) return false;
         }
         return true;
     }
 
-    public boolean unreachedNeighbours(int sommet){
-        for(Arc arc : graph.outNeighbours(sommet))
-            if(!reached.get(arc.getDest()))
-                return true;
-        return false;
-    }
+    public void parcours(){
 
-    public <T> ArrayList<ArrayList<T>> makeList(int size) {
-        ArrayList<ArrayList<T>> res = new ArrayList<>(size);
-        for(int i = 0; i <= size; i++) {
-            res.add(null);
-        }
-        return res;
-    }
-
-    public void parcours(int startingVertex){
-
-        reached.set(startingVertex);
-        while(unreachedNeighbours(startingVertex) && !allVertexesReached()){
-            Random rand = new Random();
-            List<Arc> neighbours = graph.outNeighbours(startingVertex);
-            int randomNeighbour = rand.nextInt(neighbours.size());
-            int vertexReached = neighbours.get(randomNeighbour).getDest();
-            if(!reached.get(vertexReached)) {
-                reached.set(vertexReached);
-                tree.get(neighbours.get(randomNeighbour).getDest()).add(neighbours.get(randomNeighbour));
+        reached.set(currentVertex);
+        Random random= new Random();
+        int randomNeighbours = random.nextInt(graph.order);
+        List<Arc> neighbours = graph.outNeighbours(currentVertex);
+        while(!allVertexesReached()){
+            currentVertex = neighbours.get(randomNeighbours).getDest();
+            if(!reached.get(currentVertex)){
+                tree.get(neighbours.get(randomNeighbours).getSource()).add(neighbours.get(randomNeighbours));
+                reached.set(currentVertex);
             }
-            parcours(vertexReached);
         }
 
     }
@@ -55,7 +45,7 @@ public class AldousBroder {
 
         Random random = new Random();
         int randomVertex = random.nextInt(graph.order);
-        parcours(randomVertex);
+        parcours();
 
         ArrayList<Arc> result = new ArrayList<>();
         for(ArrayList<Arc> arcs: tree) {
