@@ -28,9 +28,8 @@ public class AldousBroder {
             this.tree.add(new ArrayList<Arc>());
         }
     }
-    public ArrayList<Arc> generateTree() {
-        makeList();
 
+    private void parcours(){
 
         while(!allVertexesReached()){
             List<Arc> neighbours = graph.outNeighbours(currentVertex);
@@ -42,6 +41,10 @@ public class AldousBroder {
             reached[currentVertex]=true;
         }
 
+    }
+    public ArrayList<Arc> generateTree() {
+        makeList();
+        parcours();
         ArrayList<Arc> result = new ArrayList<>();
         for(ArrayList<Arc> arcs: tree) {
             if(!arcs.isEmpty())
